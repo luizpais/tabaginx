@@ -18,13 +18,13 @@ func (c *Controller) Init(config models.Config) {
 	mux := http.NewServeMux()
 
 	// Initialize the list of destination URLs
-	c.destinations = make([]*url.URL, len(config.Destinations))
-	for i, destination := range config.Destinations {
+	c.destinations = make([]*url.URL, len(config.Tabaginx.Destinations))
+	for i, destination := range config.Tabaginx.Destinations {
 		c.destinations[i] = mustParseURL(destination)
 	}
 
-	debugRequest := config.Debug
-	debugRequestBody := config.DebugReqBody
+	debugRequest := config.Tabaginx.Debug
+	debugRequestBody := config.Tabaginx.DebugReqBody
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// Get the current destination and increment the counter
@@ -45,8 +45,8 @@ func (c *Controller) Init(config models.Config) {
 		proxy.ServeHTTP(w, r)
 	})
 
-	fmt.Printf("Listening on port %s\n", config.Port)
-	port := fmt.Sprintf(":%d", config.Port)
+	fmt.Printf("Listening on port %d\n", config.Tabaginx.Port)
+	port := fmt.Sprintf(":%d", config.Tabaginx.Port)
 	if err := http.ListenAndServe(port, mux); err != nil {
 		panic(err)
 	}

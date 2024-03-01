@@ -25,7 +25,7 @@ func main() {
 		return
 	}
 
-	for _, destination := range config.Destinations {
+	for _, destination := range config.Tabaginx.Destinations {
 		_, err := url.Parse(destination)
 		if err != nil {
 			log.Fatalf("Invalid URL: %v", err)
@@ -35,7 +35,7 @@ func main() {
 
 	// Now you can use the config struct in your application
 	// For example, print the destinations
-	for _, destination := range config.Destinations {
+	for _, destination := range config.Tabaginx.Destinations {
 		log.Println(destination)
 	}
 

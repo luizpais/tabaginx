@@ -1,6 +1,10 @@
 # Use a specific version of the base image
 FROM golang:1.21-alpine as builder
 
+# Add Maintainer Info
+LABEL maintainer="github.com/luizpais"
+
+
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
@@ -12,6 +16,7 @@ RUN go mod download
 
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
+RUN ls -la /app
 
 # Build the Go app
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o cmd/main/main .

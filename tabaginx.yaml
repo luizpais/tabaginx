@@ -1,0 +1,7 @@
+tabaginx:
+  port: 9999
+  debug: true
+  debugReqBody: true
+  destinations:
+    - http://localhost:8080
+    - http://localhost:8081

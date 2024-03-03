@@ -16,11 +16,10 @@ RUN go mod download
 
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
-RUN ls -la /app
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o cmd/main/main .
-
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app /app/cmd/main
+RUN ls -la /app
 # Start a new stage from scratch
 FROM alpine:latest
 
@@ -29,9 +28,9 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/cmd/main .
+COPY --from=builder /app/main .
 COPY --from=builder /app/tabaginx.yaml .
-
+RUN ls -la /root
 # Expose port 9999 to the outside world
 EXPOSE 9999
 
